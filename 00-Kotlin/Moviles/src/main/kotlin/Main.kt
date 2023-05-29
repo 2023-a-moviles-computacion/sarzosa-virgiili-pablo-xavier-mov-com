@@ -68,39 +68,114 @@ fun main(args: Array<String>) {
 
 
 
-    abstract class NumeroJava{
+    val sumaUno = Suma(1,1)
+    val sumaDos = Suma(null,1)
+    val sumaTres = Suma(1,null)
+    val sumaCuatro = Suma(null,null)
+    sumaUno.sumar()
 
-        protected val numeroUno: Int
-        private val numeroDos:Int
+    sumaDos.sumar()
+    sumaTres.sumar()
+    sumaCuatro.sumar()
+    println(Suma.pi)
+    println(Suma.elevarAlCuadrado(2))
+    println(Suma.historialSumas)
 
 
-        constructor(
-            uno:Int,
-            dos:Int,
-        ){
-            this.numeroUno=uno
-            this.numeroDos=dos
-            println("Inicializando")
+
+
+}
+
+
+abstract class NumeroJava{
+
+    protected val numeroUno: Int
+    private val numeroDos:Int
+
+    constructor(
+        uno:Int,
+        dos:Int,
+    ){
+        this.numeroUno=uno
+        this.numeroDos=dos
+        println("Inicializando")
+    }
+
+}
+
+
+abstract class Numeros(//Contructor PRIMARIO)
+    //EJemplo:
+    // uno: Int, (Parámetro (sin modificador de acceso))
+    //Public var uno:Int, //Propiedad publica clase numeros.uno
+    //var uno:Int, //Propiedad de la clase ()
+    //public var uno:Int
+    protected val numeroUno:Int, // Propiedad de la clase protected numeros.numeroUno
+    protected val numeroDos:Int //Propiedad de la clase protected numeros.numeroDos
+){
+    init {
+        this.numeroUno; this.numeroUno
+        numeroUno; numeroDos
+        println("Inicializando")
+    }
+}
+
+class Suma(//Contructor primario suma
+    uno:Int ,
+    dos:Int
+
+
+):Numeros(uno, dos) {
+    init{
+        this.numeroUno;
+        this.numeroDos;
+    }
+
+    constructor(uno:Int?, dos:Int):this(if(uno==null) 0 else uno, dos){
+        //Escribimos nuestras lineas de código
+    }
+    constructor(uno:Int, dos:Int?):this(uno, if(dos==null) 0 else dos){
+        //Escribimos nuestras lineas de código
+    }
+
+    constructor(uno:Int?, dos:Int?):this(if(uno==null) 0 else uno, if(dos==null) 0 else dos){
+        //Escribimos nuestras lineas de código
+    }
+
+
+    public fun sumar(): Int {
+        val total= numeroUno+this.numeroDos;
+        agregrHistorial(total)
+        return total
+    }
+
+
+    companion object {//Atributos y Métodos "Compartidos"
+
+        //entre las instancias
+
+        val pi = 3.14
+
+        fun elevarAlCuadrado(num:Int):Int {
+
+            return num *num
+
         }
 
+        val historialSumas = arrayListOf<Int>()
 
+        fun agregrHistorial(valorNuevaSuma:Int){
+
+            historialSumas.add(valorNuevaSuma)
+
+        }
 
     }
 
-        abstract class Numeros(//Contructor PRIMARIO)
-        //EJemplo:
-        // uno: Int, (Parámetro (sin modificador de acceso))
-        //Public var uno:Int, //Propiedad publica clase numeros.uno
-        //var uno:Int, //Propiedad de la clase ()
-        //public var uno:Int
-            protected val numeroUno:Int, // Propiedad de la clase protected numeros.numeroUno
-            protected val numeroDos:Int //Propiedad de la clase protected numeros.numeroDos
-        ){
-            init {
-                this.numeroUno; this.numeroUno
-                numeroUno; numeroDos
-                println("Inicializando")
-            }
-        }
 
 }
+
+
+
+
+
