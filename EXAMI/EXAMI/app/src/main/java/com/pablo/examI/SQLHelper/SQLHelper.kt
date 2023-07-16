@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.arhakim.examI.Materia
 import com.arhakim.examI.Profesor
 
@@ -20,27 +21,30 @@ class SQLHelper(context:Context):SQLiteOpenHelper(context, DATABASE_NAME, null, 
         private val COL_EMAIL_PROFESOR = "Email"
 
         //Tabla Materia
-        private val TABLE_NAME_MATERIA = "Profesor"
-        private val COL_ID_MATERIA = "Id"
-        private val COL_NAME_MATERIA = "Name"
+        private val TABLE_NAME_MATERIA = "Materia"
+        private val COL_ID_MATERIA = "IdMateria"
+        private val COL_NAME_MATERIA = "NameMateria"
 
 
 
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val CREATE_TABLE_QUERY_PROFESOR = ("CREATE TABLE $TABLE_NAME ($COL_ID_PROFESOR INTEGER PRIMARY KEY, " +
+        val CREATE_TABLE_QUERY_PROFESOR = ("CREATE TABLE $TABLE_NAME($COL_ID_PROFESOR INTEGER PRIMARY KEY, " +
                 "$COL_NAME_PROFESOR TEXT, " +
                 "$COL_EMAIL_PROFESOR TEXT)")
 
-        //val CREATE_TABLE_QUERY_MATERIA= ("create table $TABLE_NAME_MATERIA ($COL_ID_MATERIA INTEGER PRIMARY KEY)," +
-                //"$COL_NAME_MATERIA TEXT," +
-                //"FOREING KEY ($COL_ID_PROFESOR) REFERENCES Profesor($COL_ID_PROFESOR)")
+        val CREATE_TABLE_QUERY_MATERIA= ("CREATE TABLE $TABLE_NAME_MATERIA($COL_ID_MATERIA INTEGER PRIMARY KEY, " +
+                "$COL_NAME_MATERIA TEXT, " +
+                "idProfesor INTEGER,"+
+                "FOREIGN KEY (idProfesor) REFERENCES Profesor(Id))")
 
-
+        //CREATE TABLE Materia(IdMateria INTEGER PRIMARY KEY, NameMateria TEXT, ProfesorId INTEGER, FOREIGN KEY (ProfesorId) REFERENCES Profesor(Id))
+        Log.i("", CREATE_TABLE_QUERY_PROFESOR)
+        Log.i("", CREATE_TABLE_QUERY_MATERIA)
 
         db!!.execSQL(CREATE_TABLE_QUERY_PROFESOR)
-        //db!!.execSQL(CREATE_TABLE_QUERY_MATERIA)
+        db!!.execSQL(CREATE_TABLE_QUERY_MATERIA)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
