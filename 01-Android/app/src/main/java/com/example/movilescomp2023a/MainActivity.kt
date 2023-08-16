@@ -95,12 +95,32 @@ class MainActivity : AppCompatActivity() {
             .setOnClickListener {
                 irActividad(ECrudEntrenador::class.java)
             }
+
+        val botonGoogleMaps = findViewById<Button>(R.id.btn_google_map)
+        botonGoogleMaps
+            .setOnClickListener {
+                irActividad(botonGoogleMaps::class.java)
+            }
+
+
+
         val botonRView = findViewById<Button>(R.id.btn_revcycler_view)
         botonRView
             .setOnClickListener {
                 irActividad(FRecyclerView::class.java)
             }
 
+        val botonFirebaseUI = findViewById<Button>(R.id.btn_intent_firebase_ui)
+        botonFirebaseUI
+            .setOnClickListener {
+                irActividad(HFirebaseUIAuth::class.java)
+            }
+
+        val botonFirestore = findViewById<Button>(R.id.btn_intent_firestore)
+        botonFirestore
+            .setOnClickListener {
+                irActividad(IFirestore::class.java)
+            }
     }
 
 
@@ -118,8 +138,8 @@ fun abrirActividadConParametros (
 
     val intentExplicito = Intent (this, clase)
 // Enviar parametros (solamente variables primitivas)
-    intentExplicito.putExtra("nombre", "Adrian")
-    intentExplicito.putExtra("apellido", "Eguez")
+    intentExplicito.putExtra("nombre", "Pablo")
+    intentExplicito.putExtra("apellido", "Sarzosa")
     intentExplicito.putExtra("edad", 34)
     callbackContenidoIntentExplicito.launch(intentExplicito)
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.EditText
+import com.arhakim.examI.Materia
 import com.arhakim.examI.Profesor
 import com.arhakim.examI.R
 import kotlinx.android.synthetic.main.row_layout.view.*
@@ -41,7 +42,7 @@ class AdapterProfesor(internal var activity: Activity,
 
         rowView.txt_row_id.text = lstProfesors[position].id.toString()
         rowView.txt_name.text = lstProfesors[position].name.toString()
-        rowView.txt_email.text = lstProfesors[position].email.toString()
+
 
 
         rowView.setOnClickListener {

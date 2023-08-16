@@ -24,7 +24,7 @@ class SQLHelper(context:Context):SQLiteOpenHelper(context, DATABASE_NAME, null, 
         private val TABLE_NAME_MATERIA = "Materia"
         private val COL_ID_MATERIA = "IdMateria"
         private val COL_NAME_MATERIA = "NameMateria"
-
+        private val COL_ID_PROFESOR_FOREIGN= "idProfesor"
 
 
     }
@@ -36,12 +36,10 @@ class SQLHelper(context:Context):SQLiteOpenHelper(context, DATABASE_NAME, null, 
 
         val CREATE_TABLE_QUERY_MATERIA= ("CREATE TABLE $TABLE_NAME_MATERIA($COL_ID_MATERIA INTEGER PRIMARY KEY, " +
                 "$COL_NAME_MATERIA TEXT, " +
-                "idProfesor INTEGER,"+
-                "FOREIGN KEY (idProfesor) REFERENCES Profesor(Id))")
+                "$COL_ID_PROFESOR_FOREIGN INTEGER,"+
+                "FOREIGN KEY ($COL_ID_PROFESOR_FOREIGN) REFERENCES Profesor(Id))")
 
-        //CREATE TABLE Materia(IdMateria INTEGER PRIMARY KEY, NameMateria TEXT, ProfesorId INTEGER, FOREIGN KEY (ProfesorId) REFERENCES Profesor(Id))
-        Log.i("", CREATE_TABLE_QUERY_PROFESOR)
-        Log.i("", CREATE_TABLE_QUERY_MATERIA)
+
 
         db!!.execSQL(CREATE_TABLE_QUERY_PROFESOR)
         db!!.execSQL(CREATE_TABLE_QUERY_MATERIA)
@@ -72,13 +70,37 @@ class SQLHelper(context:Context):SQLiteOpenHelper(context, DATABASE_NAME, null, 
             db.close()
             return lstProfesors
         }
-    fun addMateria(materia: Materia) {
+
+
+
+    val allMaterias:List<Materia>
+        get(){
+            val lstProfesors = ArrayList<Materia>()
+            val selectQuery = "SELECT * FROM $TABLE_NAME_MATERIA"
+            val db = this.writableDatabase
+            val cursor = db.rawQuery(selectQuery, null)
+            if(cursor.moveToFirst()) {
+                do{
+                    val materia = Materia()
+                    materia.id = cursor.getInt(cursor.getColumnIndex(COL_ID_MATERIA))
+                    materia.name = cursor.getString(cursor.getColumnIndex(COL_NAME_MATERIA))
+
+
+                    lstProfesors.add(materia)
+                } while (cursor.moveToNext())
+            }
+            db.close()
+            return lstProfesors
+        }
+
+
+    fun addMateria(materia: Materia, IdProfesor:Int) {
         val db = this.writableDatabase
         val values = ContentValues()
-        values.put(COL_ID_PROFESOR, materia.id)
-        values.put(COL_NAME_PROFESOR, materia.name)
-
-
+        values.put(COL_ID_MATERIA, materia.id)
+        values.put(COL_NAME_MATERIA, materia.name)
+        values.put(COL_NAME_MATERIA, materia.name)
+        values.put(COL_ID_PROFESOR_FOREIGN, IdProfesor)
         db.insert(TABLE_NAME, null, values)
         db.close()
     }
