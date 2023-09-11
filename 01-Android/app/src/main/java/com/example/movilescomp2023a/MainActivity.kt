@@ -141,6 +141,7 @@ fun abrirActividadConParametros (
     intentExplicito.putExtra("nombre", "Pablo")
     intentExplicito.putExtra("apellido", "Sarzosa")
     intentExplicito.putExtra("edad", 34)
+    intentExplicito.putExtra("Entrenado", BEntrenador(1, "Adrián", "Desc"))
     callbackContenidoIntentExplicito.launch(intentExplicito)
 
 }

@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ListView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -114,5 +115,140 @@ class IFirestore : AppCompatActivity() {
                 // Errores
             }
 }
+
+
+
+
+
 fun limpiarArreglo() {arreglo.clear ()} fun anadirAArregloCiudad () {}
+
+
+
+    fun consultarIndiceCompuesto(adaptador: ArrayAdapter<ICities> ){
+        val db = Firebase.firestore
+        val citiesRefUnico = db.collection("cities")
+        limpiarArreglo()
+        adaptador.notifyDataSetChanged()
+        citiesRefUnico
+            .whereEqualTo ("capital", false)
+            .whereLessThanOrEqualTo ("population",4000000)
+            .orderBy ("population", Query.Direction.DESCENDING)
+            .get ()
+            .addOnSuccessListener {
+                for (ciudad in it){
+                    anadirAArregloCiudad(ciudad)
+                }
+                adaptador.notifyDataSetChanged()
+            }
+            .addOnFailureListener { }
+    }
+
+
+
+    fun consultarCiudades(
+        adaptador: ArrayAdapter<ICities>
+    ){
+        val db = Firebase.firestore
+        val citiesRef = db.collection("cities").orderBy("population").limit(1)
+        var tarea: Task<QuerySnapshot>? = null
+        if (query == null) {
+            tarea = citiesRef.get() // lera vez
+            limpiarArreglo ()
+            adaptador.notifyDataSetChanged()
+        } else {
+            // consulta de la consulta anterior empezando en el nuevo documento
+                    tarea = query!!.get()
+            if (tarea != null) {
+            }
+        }
+
+
+
+        fun guardarQuery(
+        documentSnapshots: QuerySnapshot,
+        refCities: Query
+        ){
+        if (documentSnapshots.size () > 0) {
+            val ultimoDocumento = documentSnapshots
+                .documents [documentSnapshots.size () - 1]
+            query = refCities
+            // Start After nos ayuda a paginar
+                .startAfter (ultimoDocumento)
+        }
+        }
+
+    fun eliminarRegistro() {
+        val db = Firebase.firestore
+        val referenciaEjemploEstudiante = db.collection("ejemplo")
+
+            referenciaEjemploEstudiante
+            .document("123456789")
+            .delete() // elimina
+            .addOnCompleteListener { /* Si todo salio bien*/ }
+            .addOnFailureListener { /* Si algo salio mal*/ }
+    }
+    fun anadirAArregloCiudad (
+        ciudad: QueryDocumentSnapshot
+    ){
+        // ciudad.id
+        val nuevaCiudad = ICities (
+            ciudad. data. get ("name") as String?,
+            ciudad. data.get ("state") as String?,
+            ciudad. data.get ("country") as String?,
+            ciudad. data.get ("capital") as Boolean?,
+            ciudad. data.get ("population") as Long?,
+            ciudad. data.get ("regions") as ArrayList<String>?,
+        )
+        arreglo.add(nuevaCiudad)
+    }
+
+
+    fun consultarDocumento(
+        adaptador: ArrayAdapter<ICities>
+        ){
+            val db = Firebase.firestore
+            val citiesRefUnico = db.collection("cities")
+            limpiarArreglo ()
+            adaptador.notifyDataSetChanged()
+            // Coleccion "ciudad"
+                      //  -> Coleccion "barrio"
+                        //-> Coleccion "direccion"
+            // "Quito" => "La_Floresta" => "Е90-001"
+            // db.collection("ciudad").document("Quito")
+            //
+            //
+            //.collection("barrio").document("La Floresta").collection("direccion")
+            //.document ("E90-001")
+            // .collection ("nombre_coleccion_hijo").document("id_hijo")
+            // .collection("nombre_coleccion_nieto").document("id_nieto")
+
+
+
+
+
+            citiesRefUnico
+            .document ("BJ")
+            .get() // obtener 1 DOCUMENTO
+            .addOnSuccessListener {
+                // it=> ES UN OBJETO!
+
+                arreglo
+                    .add(
+                        ICities(
+                            it.data?.get ("name") as String?,
+                            it.data?.get("state") as String?,
+                            it.data?.get("country") as String?,
+                            it.data?.get("capital") as Boolean?,
+                            it.data?.get ("population") as Long?,
+                            it.data?.get("regions") as ArrayList<String>?
+                        )
+                    )
+                adaptador.notifyDataSetChanged()
+            }
+
+            .addOnFailureListener {
+                    // salio Mal
+            }
+
+            }
 }

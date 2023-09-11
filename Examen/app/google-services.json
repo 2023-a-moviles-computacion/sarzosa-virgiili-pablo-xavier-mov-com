@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "855184799352",
+    "project_id": "exameniib-7213f",
+    "storage_bucket": "exameniib-7213f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855184799352:android:88a8473cb78de6b12c1f8d",
+        "android_client_info": {
+          "package_name": "com.example.crudexam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855184799352-ignp8l66pdauclt9q212o1spf506alrn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb7ANreQGZHlvGm8Lw0FzxpP4X7EgalWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855184799352-ignp8l66pdauclt9q212o1spf506alrn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855184799352:android:ccec4ee5ed01e1142c1f8d",
+        "android_client_info": {
+          "package_name": "com.example.examen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855184799352-ignp8l66pdauclt9q212o1spf506alrn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb7ANreQGZHlvGm8Lw0FzxpP4X7EgalWA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855184799352-ignp8l66pdauclt9q212o1spf506alrn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
